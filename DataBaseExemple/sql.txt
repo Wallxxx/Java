@@ -1,0 +1,11 @@
+CREATE TABLE City (
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(100) UNIQUE NOT NULL,
+    region VARCHAR(100) NOT NULL, 
+    district VARCHAR(100) NOT NULL,
+    population INTEGER NOT NULL,
+    foundation INTEGER NOT NULL
+);
+
+INSERT INTO City VALUES (1, 'Moscow', 'Region', 'District', 10000, 1091);
+INSERT INTO City VALUES (2, 'Tver', 'Region', 'District', 2000, 1391);
