@@ -1,5 +1,8 @@
+import sun.lwawt.macosx.CSystemTray;
+
 import java.io.FileNotFoundException;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 
@@ -20,10 +23,11 @@ public class Main {
     public static final String selectSortName = "SELECT * FROM City ORDER BY name COLLATE " + '"' + "C" + '"';
     public static final String selectSortNameDistrict = "SELECT * FROM City ORDER BY district " +
             "COLLATE " + '"' + "C" + '"' + ", name COLLATE " + '"' + "C" + '"';
+    public static final String selectMaxPopulation = "SELECT name, population FROM City";
+    public static final String selectCityCount = "SELECT region, COUNT(*) FROM City GROUP BY region HAVING COUNT(*) > 0";
 
     public static boolean isCreate = false;
     public static boolean isParse = false;
-    public static boolean isSort = false;
 
     public static void main(String[] argv) throws SQLException, FileNotFoundException {
         showMenu();
@@ -44,7 +48,9 @@ public class Main {
             System.out.println("4) Вывести все строки, сортированные по названию городов");
             System.out.println("5) Вывести все строки, сортированные по округам и названиям городов");
             System.out.println("6) Ввести и выполнить запрос");
-            System.out.println("7) Выход");
+            System.out.println("7) Вывест город с наибольшим населением");
+            System.out.println("8) Вывести количество городов в регионах");
+            System.out.println("9) Выход");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.nextLine();
             if (choice.length() > 0) {
@@ -78,6 +84,12 @@ public class Main {
                         otherRequest(choice);
                         break;
                     case '7':
+                        maxPopulation();
+                        break;
+                    case '8':
+                        cityCount();
+                        break;
+                    case '9':
                         scanner.close();
                         if (isCreate) otherRequest(dropTableRequestMessage);
                         isCreate = false;
@@ -107,7 +119,7 @@ public class Main {
 
     public static void showSelect(ResultSet answer) throws SQLException {
         while (answer.next()) {
-            System.out.println("[" + answer.getString("id") + "]" + "City{name='" + answer.getString("name") + "', region='" +
+            System.out.println("City{name='" + answer.getString("name") + "', region='" +
                     answer.getString("region") + "', district='" +
                     answer.getString("district") + "', population=" +
                     answer.getString("population") + ", foundation='" +
@@ -117,7 +129,7 @@ public class Main {
 
     public static void parseFileInDataBase(String file_name) throws FileNotFoundException, SQLException {
         Scanner scanner = new Scanner(new File(file_name));
-        scanner.useDelimiter(";|\\n");
+        scanner.useDelimiter("[;\\n]");
         while(scanner.hasNext()) {
             String q = "INSERT INTO City VALUES (" + scanner.next() + ", '" + scanner.next() + "', '" +
                     scanner.next() + "', '" + scanner.next() + "', " + scanner.next() + ", " + scanner.next() + ");";
@@ -125,4 +137,35 @@ public class Main {
         }
         scanner.close();
     }
+
+    public static void maxPopulation() throws SQLException {
+        ArrayList<Populations> data = new ArrayList<>();
+        int maxPeople = -1000, index = -1;
+        ResultSet info = selectRequest(selectMaxPopulation);
+        while (info.next()) {
+            Populations temp = new Populations();
+            temp.city = info.getString("name");
+            temp.population = info.getInt("population");
+            data.add(temp);
+        }
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).population > maxPeople) {
+                maxPeople = data.get(i).population;
+                index = i;
+            }
+        }
+        if (index > -1) System.out.println("[" + index + "] = " + maxPeople);
+    }
+
+    public static void cityCount() throws SQLException {
+        ResultSet info = selectRequest(selectCityCount);
+        while (info.next()) {
+            System.out.println(info.getString("region") + " - " + info.getInt("count"));
+        }
+    }
+}
+
+class Populations {
+    public String city;
+    public int population;
 }
