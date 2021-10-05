@@ -17,13 +17,16 @@ public class Main {
     public static final String selectFirst20 = "SELECT * FROM City LIMIT 20";
     public static final String selectFirst100 = "SELECT * FROM City LIMIT 100";
 
+    public static final String selectSortName = "SELECT * FROM City ORDER BY name COLLATE " + '"' + "C" + '"';
+    public static final String selectSortNameDistrict = "SELECT * FROM City ORDER BY district " +
+            "COLLATE " + '"' + "C" + '"' + ", name COLLATE " + '"' + "C" + '"';
+
     public static boolean isCreate = false;
     public static boolean isParse = false;
     public static boolean isSort = false;
 
     public static void main(String[] argv) throws SQLException, FileNotFoundException {
         showMenu();
-        otherRequest(dropTableRequestMessage);
         System.out.println("Done.");
     }
 
@@ -33,21 +36,23 @@ public class Main {
             if (isCreate) {
                 status = status + " создана, ";
                 if (isParse) status = status + " загружена из файла, ";
-                if (isSort) status = status + " сортирована ";
             } else status = status + " таблица не создана.";
             System.out.println(status);
             System.out.println("1) Создать и заполнить таблицу из файла");
             System.out.println("2) Вывести первые 20 строк");
             System.out.println("3) Вывести первые 100 строк");
-            System.out.println("4) Выход");
+            System.out.println("4) Вывести все строки, сортированные по названию городов");
+            System.out.println("5) Вывести все строки, сортированные по округам и названиям городов");
+            System.out.println("6) Ввести и выполнить запрос");
+            System.out.println("7) Выход");
             Scanner scanner = new Scanner(System.in);
-            String choice = scanner.next();
+            String choice = scanner.nextLine();
             if (choice.length() > 0) {
                 switch (choice.charAt(0)) {
                     case '1':
                         if (!isCreate) {
                             System.out.print("Укажите имя файла и путь, если требуется: ");
-                            choice = scanner.next();
+                            choice = scanner.nextLine();
                             otherRequest(createTableRequestMessage);
                             parseFileInDataBase(choice);
                             isCreate = true;
@@ -62,7 +67,21 @@ public class Main {
                         showSelect(selectRequest(selectFirst100));
                         break;
                     case '4':
+                        showSelect(selectRequest(selectSortName));
+                        break;
+                    case '5':
+                        showSelect(selectRequest(selectSortNameDistrict));
+                        break;
+                    case '6':
+                        choice = scanner.nextLine();
+                        System.out.println("Command send: " + choice);
+                        otherRequest(choice);
+                        break;
+                    case '7':
                         scanner.close();
+                        if (isCreate) otherRequest(dropTableRequestMessage);
+                        isCreate = false;
+                        isParse = false;
                         return;
                     default:
                         break;
