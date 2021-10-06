@@ -2,9 +2,9 @@ class Populations {
     private final String city;
     private final int population;
 
-    public Populations(String name, int people) {
-        city = name;
-        population = people;
+    public Populations(String city, int population) {
+        this.city = city;
+        this.population = population;
     }
 
     public String getCity() {
