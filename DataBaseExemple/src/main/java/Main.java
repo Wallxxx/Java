@@ -73,7 +73,7 @@ public class Main {
                 break;
             case "9":
                 isExit = true;
-                return;
+                break;
             default:
                 break;
         }
@@ -111,7 +111,9 @@ public class Main {
                         answer.getString("population") + ", foundation='" +
                         answer.getString("foundation") + "'}");
             }
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
@@ -125,7 +127,9 @@ public class Main {
                         info.getInt("population"));
                 data.add(temp);
             }
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
         return data;
@@ -149,7 +153,9 @@ public class Main {
             while (info.next()) {
                 System.out.println(info.getString("region") + " - " + info.getInt("count"));
             }
-        } catch (SQLException | NullPointerException e) {
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
