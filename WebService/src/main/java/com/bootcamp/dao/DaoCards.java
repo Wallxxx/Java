@@ -44,9 +44,9 @@ public class DaoCards {
         }
     }
 
-    public List<Cards> getUsersDb() {
+    public List getBalance() {
         try (Session getSession = session.openSession()) {
-            return getSession.createQuery("select c from Cards c", Cards.class).getResultList();
+            return getSession.createQuery("select balance from Cards where account = (select id from Accounts where user = (select id from Users where name = 'Maxim'))").getResultList();
         }
     }
 }

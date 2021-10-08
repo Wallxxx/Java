@@ -28,10 +28,10 @@ public class DaoUsers {
 
     public void sendUsersDb(List<Users> users) {
         try (Session sendSession = session.openSession()) {
-            for (Users user : users) {
+            for (Users o : users) {
                 try {
                     sendSession.beginTransaction();
-                    sendSession.save(users);
+                    sendSession.save(o);
                     sendSession.getTransaction().commit();
                 } catch (ConstraintViolationException e) {
                     e.printStackTrace();

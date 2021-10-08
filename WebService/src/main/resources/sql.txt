@@ -1,0 +1,31 @@
+CREATE TABLE Users (
+  id SERIAL PRIMARY KEY,
+  name VARChar(100),
+  surname varchar(100),
+  patronymic varchar(100),
+  age int,
+  phone varchar(100),
+  address varchar(255),
+  );
+  
+CREATE TABLE Cards (
+  id_card SERIAL PRIMARY KEY,
+  id_user int,
+  card_number varchar(100),
+  balance INT,
+  FOREIGN key (id_user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
+  );
+  
+INSERT into Users VALUES (1, 'Maxim', 'Ushakov', 'Evgen', 22, '89851241200', 'Moscow');
+INSERT into Users VALUES (2, 'Pasha', 'Kiselev', 'Olegov', 21, '89851241202', 'Tyla');
+INSERT into Users VALUES (3, 'Danila', 'Korneev', 'Denisov', 23, '89851241205', 'Novosibirsk');
+
+INSERT INTO Cards VALUES (1, 1, '1111', 300);
+INSERT INTO Cards VALUES (2, 1, '1112', 8250000);
+INSERT INto Cards VALUES (3, 2, '2223', 55200);
+INSERT INTO Cards VALUES (4, 3, '3331', 40);
+INSERT INTO Cards VALUES (5, 3, '3332', 60075);
+INSERT INTO Cards VALUES (6, 3, '3333', 376);
+
+SELECT * FROM Users;
+SELECT * FROM Cards;

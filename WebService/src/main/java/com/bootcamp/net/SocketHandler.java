@@ -1,5 +1,7 @@
 package com.bootcamp.net;
 
+import com.bootcamp.service.BankService;
+
 import java.io.*;
 import java.net.Socket;
 
@@ -22,6 +24,8 @@ public class SocketHandler implements Runnable {
     public void run() {
         try {
             readAnswer();
+            BankService bank = new BankService();
+            bank.select();
             sendAnswer("<html><body><h1>I NOT UNDERSTAND RUSSIAN LANGUAGE, UNDESTAND????</h1></body></html>");
         } catch (Throwable t) {
             // do nothing
