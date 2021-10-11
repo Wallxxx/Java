@@ -18,7 +18,7 @@ public class BankServiceUsers {
         daoUsers = new DaoUsers();
     }
 
-    public Users getById(Integer id) {
+    public List getById(Integer id) {
         return daoUsers.getById(id);
     }
 
@@ -34,7 +34,7 @@ public class BankServiceUsers {
         return daoUsers.getByPatronymic(patronymic);
     }
 
-    public List getByAge(Long age) {
+    public List getByAge(Integer age) {
         return daoUsers.getByAge(age);
     }
 

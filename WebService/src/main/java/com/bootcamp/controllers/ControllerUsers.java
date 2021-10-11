@@ -19,12 +19,12 @@ public class ControllerUsers {
     private BankServiceUsers bankService;
 
     @RequestMapping(value = "getId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<Users> getUser(@PathVariable("id") Integer userId) {
+    public ResponseEntity<List<Users>> getUser(@PathVariable("id") Integer userId) {
         if (userId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Users user = this.bankService.getById(userId);
+        List<Users> user= this.bankService.getById(userId);
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,9 +84,12 @@ public class ControllerUsers {
     public ResponseEntity<List<Users>> getAllNames(@PathVariable("name") String name) {
         List<Users> customers = this.bankService.getByName(name);
 
-        if (customers.isEmpty()) {
+        if (customers == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        //if (customers.isEmpty()) {
+        //    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        //}
         return new ResponseEntity<>(customers, HttpStatus.OK);
     }
 }

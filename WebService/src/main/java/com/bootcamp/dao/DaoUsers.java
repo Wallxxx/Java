@@ -3,6 +3,7 @@ package com.bootcamp.dao;
 import com.bootcamp.tables.Accounts;
 import com.bootcamp.tables.Cards;
 import com.bootcamp.tables.Users;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -11,7 +12,9 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.PersistenceException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DaoUsers {
     private SessionFactory session;
@@ -29,17 +32,21 @@ public class DaoUsers {
         }
     }
 
-    public Users getById(Integer id) {
+    public List getById(Integer id) {
         try (Session getSession = session.openSession()) {
-            Users user = getSession.get(Users.class, id);
-           // List<Users> temp = getSession.createSQLQuery("select * from Users where id = " + id).getResultList();
-            return user;
+            //Users user = getSession.get(Users.class, id);
+            return getSession.createSQLQuery("select * from Users where id = " + id).getResultList();
+            //return user;
         }
     }
 
+    @JsonIgnore
     public List getByName(String name) {
         try (Session getSession = session.openSession()) {
-            return getSession.createSQLQuery("select * from Users where name = " + name).getResultList();
+            //Users user = getSession.get(Users.class, name);
+            //return getSession.createSQLQuery("select * from Users where name = " + name).getResultList();
+            return getSession.createQuery("From Users where name = " + name).getResultList();
+            //return user;
         }
     }
 
@@ -55,7 +62,7 @@ public class DaoUsers {
         }
     }
 
-    public List getByAge(Long age) {
+    public List getByAge(Integer age) {
         try (Session getSession = session.openSession()) {
             return getSession.createSQLQuery("select * from Users where age = " + age).getResultList();
         }

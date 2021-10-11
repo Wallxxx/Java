@@ -1,8 +1,11 @@
 package com.bootcamp.tables;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="ACCOUNTS")
@@ -13,7 +16,7 @@ public class Accounts {
     private String number;
 
     @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
-    List<Cards> cards;
+    Set<Cards> cards;
 
     @ManyToOne
     @JoinColumn(name = "user")
@@ -46,11 +49,11 @@ public class Accounts {
         this.number = number;
     }
 
-    public List<Cards> getCards() {
+    public Set<Cards> getCards() {
         return cards;
     }
 
-    public void setCards(List<Cards> cards) {
+    public void setCards(Set<Cards> cards) {
         this.cards = cards;
     }
 
