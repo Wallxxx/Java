@@ -9,9 +9,12 @@ public class Cards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int account;
     private String number;
     private int balance;
+
+    @ManyToOne
+    @JoinColumn(name = "account")
+    private Accounts account;
 
     public Cards() {
     }
@@ -21,21 +24,40 @@ public class Cards {
         if (account < 1) throw new IllegalArgumentException("Неверный номер счёта");
         if (balance < 0) throw new IllegalArgumentException("Отрицательный баланс");
 
-        this.account = account;
         this.number = number;
         this.balance = balance;
     }
 
-    public int getAccount() {
-        return account;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNumber() {
         return number;
     }
 
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public int getBalance() {
         return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    public Accounts getAccount() {
+        return account;
+    }
+
+    public void setAccount(Accounts account) {
+        this.account = account;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class SocketHandler implements Runnable {
         try {
             readAnswer();
             BankService bank = new BankService();
-            bank.select();
+            //bank.select();
             sendAnswer("<html><body><h1>I NOT UNDERSTAND RUSSIAN LANGUAGE, UNDESTAND????</h1></body></html>");
         } catch (Throwable t) {
             // do nothing

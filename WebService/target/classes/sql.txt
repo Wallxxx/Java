@@ -1,31 +1,47 @@
 CREATE TABLE Users (
-  id SERIAL PRIMARY KEY,
-  name VARChar(100),
-  surname varchar(100),
-  patronymic varchar(100),
-  age int,
-  phone varchar(100),
-  address varchar(255),
-  );
-  
-CREATE TABLE Cards (
-  id_card SERIAL PRIMARY KEY,
-  id_user int,
-  card_number varchar(100),
-  balance INT,
-  FOREIGN key (id_user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
-  );
-  
-INSERT into Users VALUES (1, 'Maxim', 'Ushakov', 'Evgen', 22, '89851241200', 'Moscow');
-INSERT into Users VALUES (2, 'Pasha', 'Kiselev', 'Olegov', 21, '89851241202', 'Tyla');
-INSERT into Users VALUES (3, 'Danila', 'Korneev', 'Denisov', 23, '89851241205', 'Novosibirsk');
+                       id integer PRIMARY KEY AUTO_INCREMENT,
+                       name VARChar(100),
+                       surname varchar(100),
+                       patronymic varchar(100),
+                       age int,
+                       phone varchar(100),
+                       address varchar(255)
+);
 
-INSERT INTO Cards VALUES (1, 1, '1111', 300);
-INSERT INTO Cards VALUES (2, 1, '1112', 8250000);
-INSERT INto Cards VALUES (3, 2, '2223', 55200);
-INSERT INTO Cards VALUES (4, 3, '3331', 40);
-INSERT INTO Cards VALUES (5, 3, '3332', 60075);
-INSERT INTO Cards VALUES (6, 3, '3333', 376);
+CREATE TABLE Accounts (
+                          id INTEger PRIMARY KEY AUTO_INCREMENT,
+                          user int,
+                          number varchar(100),
+                          FOREIGN KEY (user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
+);
+
+CREATE TABLE Cards (
+                       id integer PRIMARY KEY AUTO_INCREMENT,
+                       account int,
+                       number varchar(100),
+                       balance INT,
+                       FOREIGN KEY (account) REFERENCES Accounts(id) on DELETE CASCADE on UPDATE CASCADE
+);
+
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Maxim', 'Ushakov', 'Engen', 22, '89851241200', 'Moscow');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Pasha', 'Kisel', 'Olegov', 22, '89833241200', 'Moscow');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Kirill', 'Fost', 'Denisov', 19, '89851266200', 'Tyla');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Leha', 'Demin', 'Ivanov', 21, '89851241258', 'Moscow');
+
+INSERT INTO Accounts (user, number) VALUES (1, '7908-0000');
+INSERT INTO Accounts (user, number) VALUES (2, '7908-0021');
+INSERT INTO Accounts (user, number) VALUES (3, '7908-0019');
+INSERT INTO Accounts (user, number) VALUES (4, '7908-0010');
+
+INSERT INto Cards (account, number, balance) VALUES (1, '1274 0000 5555 0001', 500);
+INSERT INto Cards (account, number, balance) VALUES (1, '1274 0000 5555 0002', 853500);
+INSERT INto Cards (account, number, balance) VALUES (2, '1274 0034 5555 0000', 325);
+INSERT INto Cards (account, number, balance) VALUES (3, '1274 0120 5555 0001', 100);
+INSERT INto Cards (account, number, balance) VALUES (4, '1274 0077 5555 0001', 570);
+
 
 SELECT * FROM Users;
+SELECT * FROM Accounts;
 SELECT * FROM Cards;
+
+SELECT balance from Cards WHERE account = (SELECT id from Accounts where user = (select id from Users where name = 'Leha'));

@@ -1,6 +1,7 @@
 package com.bootcamp.tables;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -8,9 +9,15 @@ import java.util.Objects;
 public class Accounts {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String number;
-    private int user;
+
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    List<Cards> cards;
+
+    @ManyToOne
+    @JoinColumn(name = "user")
+    private Users user;
 
     public Accounts() {
 
@@ -21,15 +28,38 @@ public class Accounts {
         if (user < 1) throw new IllegalArgumentException("Неверный id пользователя");
 
         this.number = number;
-        this.user = user;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNumber() {
         return number;
     }
 
-    public int getUser() {
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public List<Cards> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Cards> cards) {
+        this.cards = cards;
+    }
+
+    public Users getUser() {
         return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
     }
 
     @Override
@@ -37,7 +67,7 @@ public class Accounts {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Accounts accounts = (Accounts) o;
-        return user == accounts.user && number.equals(accounts.number);
+        return number.equals(accounts.number);
     }
 
     @Override

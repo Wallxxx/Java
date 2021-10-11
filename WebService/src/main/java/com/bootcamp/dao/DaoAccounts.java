@@ -12,10 +12,10 @@ import org.hibernate.exception.ConstraintViolationException;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
-public class DaoCards {
+public class DaoAccounts {
     private SessionFactory session;
 
-    public DaoCards() {
+    public DaoAccounts() {
         try {
             Configuration config = new Configuration().configure();
             config.addAnnotatedClass(Users.class).addAnnotatedClass(Accounts.class).addAnnotatedClass(Cards.class); // City.class
@@ -28,12 +28,12 @@ public class DaoCards {
         }
     }
 
-    public void sendUsersDb(List<Cards> user_cards) {
+    /*public void sendUsersDb(List<Users> users) {
         try (Session sendSession = session.openSession()) {
-            for (Cards card : user_cards) {
+            for (Users o : users) {
                 try {
                     sendSession.beginTransaction();
-                    sendSession.save(user_cards);
+                    sendSession.save(o);
                     sendSession.getTransaction().commit();
                 } catch (ConstraintViolationException e) {
                     e.printStackTrace();
@@ -44,29 +44,23 @@ public class DaoCards {
             e.printStackTrace();
             System.exit(-1);
         }
-    }
+    }*/
 
     public List getById(Long id) {
         try (Session getSession = session.openSession()) {
-            return getSession.createSQLQuery("select * from Cards where id = " + id).getResultList();
+            return getSession.createSQLQuery("select * from Accounts where id = " + id).getResultList();
         }
     }
 
-    public List getByAccountId(Long id) {
+    public List getByUserId(Long id) {
         try (Session getSession = session.openSession()) {
-            return getSession.createSQLQuery("select * from Cards where account = " + id).getResultList();
+            return getSession.createSQLQuery("select * from Accounts where user = " + id).getResultList();
         }
     }
 
     public List getByNumber(String number) {
         try (Session getSession = session.openSession()) {
-            return getSession.createSQLQuery("select * from Cards where number = " + number).getResultList();
-        }
-    }
-
-    public List getByBalance(Long balance) {
-        try (Session getSession = session.openSession()) {
-            return getSession.createSQLQuery("select * from Cards where balance = " + balance).getResultList();
+            return getSession.createSQLQuery("select * from Accounts where number = " + number).getResultList();
         }
     }
 }

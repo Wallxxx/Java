@@ -16,7 +16,7 @@ public class BankService {
         daoCards = new DaoCards();
     }
 
-    public void push() {
+    /*public void push() {
         List<Users> data = new ArrayList<>();
         Users info = new Users("Maxim", "Ushakov", "Evgen", 22, "880055544555", "Antarktida", "7908-0001");
         data.add(info);
@@ -26,6 +26,6 @@ public class BankService {
     public void select() {
         List data = daoCards.getBalance();
         for (Object i : data) System.out.println(i.toString());
-    }
+    }*/
 
 }

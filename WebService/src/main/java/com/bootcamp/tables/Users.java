@@ -1,6 +1,7 @@
 package com.bootcamp.tables;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -9,13 +10,21 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "surname")
     private String surname;
+    @Column(name = "patronymic")
     private String patronymic;
+    @Column(name = "age")
     private int age;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "address")
     private String address;
-    private String account;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    List<Accounts> accounts;
 
     public Users() {
     }
@@ -34,35 +43,70 @@ public class Users {
         this.age = age;
         this.phone = phone;
         this.address = address;
-        this.account = account;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getSurname() {
         return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getPatronymic() {
         return patronymic;
     }
 
+    public void setPatronymic(String patronymic) {
+        this.patronymic = patronymic;
+    }
+
     public int getAge() {
         return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     public String getPhone() {
         return phone;
     }
 
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getAddress() {
         return address;
     }
 
-    public String getAccount() {
-        return account;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public List<Accounts> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Accounts> accounts) {
+        this.accounts = accounts;
     }
 
     @Override
@@ -70,12 +114,12 @@ public class Users {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Users users = (Users) o;
-        return age == users.age && Objects.equals(name, users.name) && Objects.equals(surname, users.surname) && Objects.equals(patronymic, users.patronymic) && Objects.equals(phone, users.phone) && Objects.equals(address, users.address) && Objects.equals(account, users.account);
+        return age == users.age && Objects.equals(name, users.name) && Objects.equals(surname, users.surname) && Objects.equals(patronymic, users.patronymic) && Objects.equals(phone, users.phone) && Objects.equals(address, users.address);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, surname, patronymic, age, phone, address, account);
+        return Objects.hash(name, surname, patronymic, age, phone, address);
     }
 
     @Override
@@ -88,7 +132,6 @@ public class Users {
                 ", age=" + age +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
-                ", account='" + account + '\'' +
                 '}';
     }
 }

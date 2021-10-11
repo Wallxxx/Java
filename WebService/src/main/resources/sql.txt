@@ -1,38 +1,37 @@
 CREATE TABLE Users (
-  id integer PRIMARY KEY AUTOINCREMENT,
-  name VARChar(100),
-  surname varchar(100),
-  patronymic varchar(100),
-  age int,
-  phone varchar(100),
-  address varchar(255),
-  account varchar()
-  );
-  
-CREATE TABLE Accounts (
-  id INTEger PRIMARY KEY AUTOINCREMENT,
-  user int,
-  account varchar(100),
-  FOREIGN KEY (user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
-  );
-  
-CREATE TABLE Cards (
-  id integer PRIMARY KEY AUTOINCREMENT,
-  account int,
-  number varchar(100),
-  balance INT,
-  FOREIGN KEY (account) REFERENCES Accounts(id) on DELETE CASCADE on UPDATE CASCADE
-  );
-  
-INSERT INTO Users (name, surname, patronymic, age, phone, address, account) VALUES ('Maxim', 'Ushakov', 'Engen', 22, '89851241200', 'Moscow', '7908-0000');
-INSERT INTO Users (name, surname, patronymic, age, phone, address, account) VALUES ('Pasha', 'Kisel', 'Olegov', 22, '89833241200', 'Moscow', '7908-0021');
-INSERT INTO Users (name, surname, patronymic, age, phone, address, account) VALUES ('Kirill', 'Fost', 'Denisov', 19, '89851266200', 'Tyla', '7908-0019');
-INSERT INTO Users (name, surname, patronymic, age, phone, address, account) VALUES ('Leha', 'Demin', 'Ivanov', 21, '89851241258', 'Moscow', '7908-0010');
+                       id integer PRIMARY KEY AUTO_INCREMENT,
+                       name VARChar(100),
+                       surname varchar(100),
+                       patronymic varchar(100),
+                       age int,
+                       phone varchar(100),
+                       address varchar(255)
+);
 
-INSERT INTO Accounts (user, account) VALUES (1, '7908-0000');
-INSERT INTO Accounts (user, account) VALUES (2, '7908-0021');
-INSERT INTO Accounts (user, account) VALUES (3, '7908-0019');
-INSERT INTO Accounts (user, account) VALUES (4, '7908-0010');
+CREATE TABLE Accounts (
+                          id INTEger PRIMARY KEY AUTO_INCREMENT,
+                          user int,
+                          number varchar(100),
+                          FOREIGN KEY (user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
+);
+
+CREATE TABLE Cards (
+                       id integer PRIMARY KEY AUTO_INCREMENT,
+                       account int,
+                       number varchar(100),
+                       balance INT,
+                       FOREIGN KEY (account) REFERENCES Accounts(id) on DELETE CASCADE on UPDATE CASCADE
+);
+
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Maxim', 'Ushakov', 'Engen', 22, '89851241200', 'Moscow');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Pasha', 'Kisel', 'Olegov', 22, '89833241200', 'Moscow');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Kirill', 'Fost', 'Denisov', 19, '89851266200', 'Tyla');
+INSERT INTO Users (name, surname, patronymic, age, phone, address) VALUES ('Leha', 'Demin', 'Ivanov', 21, '89851241258', 'Moscow');
+
+INSERT INTO Accounts (user, number) VALUES (1, '7908-0000');
+INSERT INTO Accounts (user, number) VALUES (2, '7908-0021');
+INSERT INTO Accounts (user, number) VALUES (3, '7908-0019');
+INSERT INTO Accounts (user, number) VALUES (4, '7908-0010');
 
 INSERT INto Cards (account, number, balance) VALUES (1, '1274 0000 5555 0001', 500);
 INSERT INto Cards (account, number, balance) VALUES (1, '1274 0000 5555 0002', 853500);
