@@ -19,12 +19,12 @@ public class ControllerUsers {
     private BankServiceUsers bankService;
 
     @RequestMapping(value = "getId/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public ResponseEntity<List<Users>> getUser(@PathVariable("id") Integer userId) {
+    public ResponseEntity<Users> getUser(@PathVariable("id") Integer userId) {
         if (userId == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<Users> user= this.bankService.getById(userId);
+        Users user= this.bankService.getById(userId);
 
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,6 +82,19 @@ public class ControllerUsers {
 
     @RequestMapping(value = "getName/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<List<Users>> getAllNames(@PathVariable("name") String name) {
+        List<Users> customers = this.bankService.getByName(name);
+
+        if (customers == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        //if (customers.isEmpty()) {
+        //    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        //}
+        return new ResponseEntity<>(customers, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "cards/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<Users>> getAllCards(@PathVariable("name") String name) {
         List<Users> customers = this.bankService.getByName(name);
 
         if (customers == null) {

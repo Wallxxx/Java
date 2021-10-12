@@ -11,6 +11,7 @@ import org.hibernate.exception.ConstraintViolationException;
 
 import javax.persistence.PersistenceException;
 import java.util.List;
+import java.util.Set;
 
 public class DaoCards {
     private SessionFactory session;
@@ -43,6 +44,40 @@ public class DaoCards {
         } catch (PersistenceException e) {
             e.printStackTrace();
             System.exit(-1);
+        }
+    }
+
+    public Cards getBalanceById(Integer id) {
+        try (Session getSession = session.openSession()) {
+            Cards cards = getSession.get(Cards.class, id);
+            return cards;
+        }
+    }
+
+    public List getCardsByUserId(Integer id) {
+        try (Session getSession = session.openSession()) {
+            return getSession.createQuery("from Cards where account = " +
+                    "(select id from Accounts where user = " + id + ")").getResultList();
+        }
+    }
+
+    public List getAll() {
+        try (Session getSession = session.openSession()) {
+            return getSession.createQuery("from Cards").getResultList();
+        }
+    }
+
+    public void newCard(String number) {
+        try (Session getSession = session.openSession()) {
+            Accounts newCardAccountId = (Accounts) getSession.createQuery("from Accounts where number = " + number).getResultList().get(0);
+            try {
+                getSession.beginTransaction();
+                getSession.save(new Cards(newCardAccountId, "7906-3567-2357-0000", 0));
+                getSession.getTransaction().commit();
+            } catch (ConstraintViolationException e) {
+                e.printStackTrace();
+                getSession.getTransaction().rollback();
+            }
         }
     }
 

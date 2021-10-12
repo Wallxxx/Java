@@ -32,15 +32,14 @@ public class DaoUsers {
         }
     }
 
-    public List getById(Integer id) {
+    public Users getById(Integer id) {
         try (Session getSession = session.openSession()) {
-            //Users user = getSession.get(Users.class, id);
-            return getSession.createSQLQuery("select * from Users where id = " + id).getResultList();
-            //return user;
+            Users user = getSession.get(Users.class, id);
+            //return getSession.createSQLQuery("select * from Users where id = " + id).getResultList();
+            return user;
         }
     }
 
-    @JsonIgnore
     public List getByName(String name) {
         try (Session getSession = session.openSession()) {
             //Users user = getSession.get(Users.class, name);

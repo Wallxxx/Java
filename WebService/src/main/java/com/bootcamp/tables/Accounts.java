@@ -1,6 +1,7 @@
 package com.bootcamp.tables;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,9 +16,28 @@ public class Accounts {
     private Integer id;
     private String number;
 
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JsonIgnoreProperties(value = "account", allowSetters = true)
+    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     Set<Cards> cards;
 
+    public Set<Cards> getCards() {
+        return cards;
+    }
+
+    public void setCards(Set<Cards> cards) {
+        this.cards = cards;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user")
     private Users user;
@@ -49,21 +69,7 @@ public class Accounts {
         this.number = number;
     }
 
-    public Set<Cards> getCards() {
-        return cards;
-    }
 
-    public void setCards(Set<Cards> cards) {
-        this.cards = cards;
-    }
-
-    public Users getUser() {
-        return user;
-    }
-
-    public void setUser(Users user) {
-        this.user = user;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -75,7 +81,7 @@ public class Accounts {
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, user);
+        return Objects.hash(number);
     }
 
     @Override
@@ -83,7 +89,7 @@ public class Accounts {
         return "Accounts{" +
                 "id=" + id +
                 ", number='" + number + '\'' +
-                ", user=" + user +
+                ", user=" +
                 '}';
     }
 }

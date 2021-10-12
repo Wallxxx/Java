@@ -45,3 +45,10 @@ SELECT * FROM Accounts;
 SELECT * FROM Cards;
 
 SELECT balance from Cards WHERE account = (SELECT id from Accounts where user = (select id from Users where name = 'Leha'));
+
+
+
+
+http://localhost:8080/api/account/buy/'7908-0000'/101
+http://localhost:8080/api/cards/all/
+http://localhost:8080/api/cards/new/'7908-0000'

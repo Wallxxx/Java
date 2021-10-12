@@ -1,8 +1,12 @@
 package com.bootcamp.tables;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name="USERS")
@@ -23,8 +27,10 @@ public class Users {
     @Column(name = "address")
     private String address;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    List<Accounts> accounts;
+    @JsonIgnore
+    @JsonIgnoreProperties(value = "user", allowSetters = true)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    Set<Accounts> accounts;
 
     public Users() {
     }
@@ -93,20 +99,20 @@ public class Users {
         this.phone = phone;
     }
 
+    public Set<Accounts> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(Set<Accounts> accounts) {
+        this.accounts = accounts;
+    }
+
     public String getAddress() {
         return address;
     }
 
     public void setAddress(String address) {
         this.address = address;
-    }
-
-    public List<Accounts> getAccounts() {
-        return accounts;
-    }
-
-    public void setAccounts(List<Accounts> accounts) {
-        this.accounts = accounts;
     }
 
     @Override

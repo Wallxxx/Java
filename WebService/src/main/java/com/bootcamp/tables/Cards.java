@@ -14,6 +14,7 @@ public class Cards {
     private String number;
     private int balance;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "account")
     private Accounts account;
@@ -21,13 +22,22 @@ public class Cards {
     public Cards() {
     }
 
-    public Cards(int account, String number, int balance) {
+    public Cards(Accounts account, String number, int balance) {
         if (number == null) throw new IllegalArgumentException("Не указан номер карты");
-        if (account < 1) throw new IllegalArgumentException("Неверный номер счёта");
+        if (account == null) throw new IllegalArgumentException("Неверный номер счёта");
         if (balance < 0) throw new IllegalArgumentException("Отрицательный баланс");
 
+        this.account = account;
         this.number = number;
         this.balance = balance;
+    }
+
+    public Accounts getAccount() {
+        return account;
+    }
+
+    public void setAccount(Accounts account) {
+        this.account = account;
     }
 
     public int getId() {
@@ -54,32 +64,23 @@ public class Cards {
         this.balance = balance;
     }
 
-    public Accounts getAccount() {
-        return account;
-    }
-
-    public void setAccount(Accounts account) {
-        this.account = account;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Cards cards = (Cards) o;
-        return account == cards.account && balance == cards.balance && Objects.equals(number, cards.number);
+        return balance == cards.balance && Objects.equals(number, cards.number);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(account, number, balance);
+        return Objects.hash(number, balance);
     }
 
     @Override
     public String toString() {
         return "Cards{" +
                 "id=" + id +
-                ", account=" + account +
                 ", number='" + number + '\'' +
                 ", balance=" + balance +
                 '}';

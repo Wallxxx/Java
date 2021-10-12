@@ -18,7 +18,7 @@ public class BankServiceUsers {
         daoUsers = new DaoUsers();
     }
 
-    public List getById(Integer id) {
+    public Users getById(Integer id) {
         return daoUsers.getById(id);
     }
 
