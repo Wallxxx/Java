@@ -10,10 +10,10 @@ import java.util.List;
 @Table(name = "Users")
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class Users extends BaseEntity{
+
+    @Version
+    private long version;
 
     @Column(name = "name")
     private String name;
@@ -34,6 +34,6 @@ public class Users extends BaseEntity{
     private String address;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Accounts> accounts;
 }

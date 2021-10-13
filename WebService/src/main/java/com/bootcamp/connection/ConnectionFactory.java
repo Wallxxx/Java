@@ -7,7 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-public class ConnectionFactory {
+public class ConnectionFactory implements ConnectionFactoryInterface{
     private static ConnectionFactory factory;
 
     private SessionFactory sessionFactory;
@@ -38,6 +38,7 @@ public class ConnectionFactory {
         }
     }
 
+    @Override
     public SessionFactory getSessionFactory() {
         return sessionFactory;
     }

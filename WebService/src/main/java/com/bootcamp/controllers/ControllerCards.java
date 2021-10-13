@@ -21,31 +21,13 @@ public class ControllerCards {
     @Autowired
     private BankServiceCards bankServiceCards;
 
-    @Autowired
-    private BankServiceAccounts bankServiceAccounts;
-
     @RequestMapping(value = "getCardsByUserId/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Cards>> getCardsByUserId(@PathVariable("id") Integer id) {
-        if (id == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        List cards = this.bankServiceCards.getCardsByUserId(id);
-        if (cards.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(cards, HttpStatus.OK);
+        return bankServiceCards.getCardsByUserId(id);
     }
 
     @RequestMapping(value = "newCard/{number}", method = RequestMethod.POST)
     public ResponseEntity<Cards> newCard (@PathVariable("number") String number) {
-        if (number == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Accounts account = this.bankServiceAccounts.getBalanceByAccountNumber(number);
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        this.bankServiceCards.newCard(number);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return bankServiceCards.newCard(number);
     }
 }

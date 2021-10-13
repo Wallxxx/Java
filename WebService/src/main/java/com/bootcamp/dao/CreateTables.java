@@ -9,8 +9,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class CreateTables implements FillingInterface {
-    private final String tablesPath = "tables.sql";
-    private final String insertsPath = "inserts.sql";
+    private final String tablesPath = "src/main/resources/schema.sql";
+    private final String insertsPath = "src/main/resources/data.sql";
     private ConnectionFactory connectionFactory;
 
     public CreateTables() {

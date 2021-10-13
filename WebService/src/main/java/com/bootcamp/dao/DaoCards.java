@@ -7,26 +7,32 @@ import com.bootcamp.util.GeneratorNumberCard;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class DaoCards {
+@Repository
+public class DaoCards implements DaoCardsInterface{
     private SessionFactory sessionFactory = ConnectionFactory.getInstance().getSessionFactory();
+    private final GeneratorNumberCard generator = new GeneratorNumberCard();
 
-    public List getCardsByUserId(Integer id) {
+    @Override
+    public List<Cards> getCardsByUserId(Integer id) {
         try (Session session = sessionFactory.openSession()) {
             return session.createQuery("from Cards where account = " +
-                    "(select id from Accounts where user = " + id + ")").getResultList();
+                    "(select id from Accounts where user = " + id + ")", Cards.class).getResultList();
         }
     }
 
+    @Override
     public void newCard(String number) {
         try (Session session = sessionFactory.openSession()) {
             Accounts accountId = (Accounts) session.createQuery("from Accounts where number = '" + number + "'")
                     .getResultList().get(0);
             try {
+                Cards card = new Cards(accountId, generator.generate());
                 session.beginTransaction();
-                session.save(new Cards(accountId, new GeneratorNumberCard().generate()));
+                session.save(card);
                 session.getTransaction().commit();
             } catch (ConstraintViolationException e) {
                 e.printStackTrace();

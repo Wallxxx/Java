@@ -9,25 +9,31 @@ import java.util.List;
 
 @Entity
 @Table(name = "Accounts")
-@Getter
-@Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class Accounts extends BaseEntity{
 
+    @Version
+    private long version;
+
+    @Getter
+    @Setter
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user")
     private Users user;
 
+    @Getter
+    @Setter
     @Column(name = "number")
     private String number;
 
+    @Getter
+    @Setter
     @Column(name = "balance")
     private BigDecimal balance;
 
+    @Getter
+    @Setter
     @JsonIgnore
-    @OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Cards> cards;
 }

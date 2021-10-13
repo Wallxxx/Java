@@ -19,51 +19,17 @@ public class ControllerAccounts {
 
     @RequestMapping(value = "getBanalceByUserId/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Accounts>> getBalanceByUserId(@PathVariable("id") Integer id) {
-        if (id == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        List account = this.bankService.getBalanceByUserId(id);
-        if (account.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(account, HttpStatus.OK);
+        return bankService.getBalanceByUserId(id);
     }
 
     @RequestMapping(value = "getBalanceByAccountNumber/{number}", method = RequestMethod.GET)
     public ResponseEntity<Accounts> getBalanceByAccountNumber(@PathVariable("number") String number) {
-        if (number == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Accounts account = this.bankService.getBalanceByAccountNumber(number);
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(account, HttpStatus.OK);
+
+        return bankService.getBalanceByAccountNumber(number);
     }
 
     @RequestMapping(value = "addDeposit/", method = RequestMethod.PUT)
     public ResponseEntity<Accounts> addDeposit(@RequestBody DtoDeposit changeDeposit) {
-        if (changeDeposit == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Accounts account = this.bankService.getBalanceByAccountNumber(changeDeposit.getNumber());
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        this.bankService.addDeposit(changeDeposit.getNumber(), changeDeposit.getValue());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "setDeposit/", method = RequestMethod.PUT)
-    public ResponseEntity<Accounts> setDeposit(@RequestBody DtoDeposit changeDeposit) {
-        if (changeDeposit == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-        Accounts account = this.bankService.getBalanceByAccountNumber(changeDeposit.getNumber());
-        if (account == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        this.bankService.setDeposit(changeDeposit.getNumber(), changeDeposit.getValue());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return bankService.addDeposit(changeDeposit.getNumber(), changeDeposit.getValue());
     }
 }
