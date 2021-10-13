@@ -11,7 +11,7 @@ CREATE TABLE Users (
 CREATE TABLE Accounts (
                           id INTEger PRIMARY KEY AUTO_INCREMENT,
                           user int,
-                          number varchar(100),
+                          number varchar(100) UNIQUE,
                           balance DECIMAL,
                           FOREIGN KEY (user) REFERENCES Users(id) on DELETE CASCADE on UPDATE CASCADE
 );
@@ -19,6 +19,6 @@ CREATE TABLE Accounts (
 CREATE TABLE Cards (
                        id integer PRIMARY KEY AUTO_INCREMENT,
                        account int,
-                       number varchar(100),
+                       number varchar(100) UNIQUE,
                        FOREIGN KEY (account) REFERENCES Accounts(id) on DELETE CASCADE on UPDATE CASCADE
 );
