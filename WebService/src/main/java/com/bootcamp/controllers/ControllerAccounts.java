@@ -1,14 +1,14 @@
 package com.bootcamp.controllers;
 
+import com.bootcamp.dto.DtoDeposit;
+import com.bootcamp.model.Accounts;
 import com.bootcamp.service.BankServiceAccounts;
-import com.bootcamp.tables.Cards;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "api/account/")
@@ -17,12 +17,53 @@ public class ControllerAccounts {
     @Autowired
     private BankServiceAccounts bankService;
 
-    @RequestMapping(value = "buy/{number}/{money}", method = RequestMethod.PUT)
-    public ResponseEntity<Cards> buy(@PathVariable("number") String number, @PathVariable("money") Integer money) {
-        if (number == null || money == null) {
+    @RequestMapping(value = "getBanalceByUserId/{id}", method = RequestMethod.GET)
+    public ResponseEntity<List<Accounts>> getBalanceByUserId(@PathVariable("id") Integer id) {
+        if (id == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        bankService.buy(number, money);
+        List account = this.bankService.getBalanceByUserId(id);
+        if (account.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "getBalanceByAccountNumber/{number}", method = RequestMethod.GET)
+    public ResponseEntity<Accounts> getBalanceByAccountNumber(@PathVariable("number") String number) {
+        if (number == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Accounts account = this.bankService.getBalanceByAccountNumber(number);
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(account, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "addDeposit/", method = RequestMethod.PUT)
+    public ResponseEntity<Accounts> addDeposit(@RequestBody DtoDeposit changeDeposit) {
+        if (changeDeposit == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Accounts account = this.bankService.getBalanceByAccountNumber(changeDeposit.getNumber());
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        this.bankService.addDeposit(changeDeposit.getNumber(), changeDeposit.getValue());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "setDeposit/", method = RequestMethod.PUT)
+    public ResponseEntity<Accounts> setDeposit(@RequestBody DtoDeposit changeDeposit) {
+        if (changeDeposit == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Accounts account = this.bankService.getBalanceByAccountNumber(changeDeposit.getNumber());
+        if (account == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        this.bankService.setDeposit(changeDeposit.getNumber(), changeDeposit.getValue());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 }
