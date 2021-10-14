@@ -1,11 +1,8 @@
 package com.bootcamp.controllers;
 
-import com.bootcamp.model.Accounts;
 import com.bootcamp.model.Cards;
-import com.bootcamp.service.BankServiceAccounts;
 import com.bootcamp.service.BankServiceCards;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

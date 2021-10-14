@@ -4,7 +4,6 @@ import com.bootcamp.dto.DtoDeposit;
 import com.bootcamp.model.Accounts;
 import com.bootcamp.service.BankServiceAccounts;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,12 @@ import java.util.List;
 @RequestMapping(value = "api/account/")
 public class ControllerAccounts {
 
+    private final BankServiceAccounts bankService;
+
     @Autowired
-    private BankServiceAccounts bankService;
+    public ControllerAccounts(BankServiceAccounts bankService) {
+        this.bankService = bankService;
+    }
 
     @RequestMapping(value = "getBanalceByUserId/{id}", method = RequestMethod.GET)
     public ResponseEntity<List<Accounts>> getBalanceByUserId(@PathVariable("id") Integer id) {
