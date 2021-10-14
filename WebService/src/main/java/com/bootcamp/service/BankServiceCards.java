@@ -51,4 +51,16 @@ public class BankServiceCards implements BankServiceCardsInterface{
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<Long> getCountCardsByAccount(String number) {
+        if (number == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Long cardsCount = daoCards.getCountCardsByAccount(number);
+        if (cardsCount == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(cardsCount, HttpStatus.OK);
+    }
+
 }

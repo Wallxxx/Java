@@ -1,3 +1,7 @@
+DROP TABLE IF EXISTS Cards;
+DROP TABLE IF EXISTS Accounts;
+DROP TABLE IF EXISTS Users;
+
 CREATE TABLE Users (
                        id integer PRIMARY KEY AUTO_INCREMENT,
                        name VARChar(100) NOT NULL ,

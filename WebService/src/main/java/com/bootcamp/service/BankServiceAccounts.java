@@ -21,6 +21,7 @@ public class BankServiceAccounts implements BankServiceAccountsInterface {
         this.daoAccounts = daoAccounts;
     }
 
+    @Override
     public ResponseEntity<List<Accounts>> getBalanceByUserId(Integer id) {
         log.debug("BankServiceAccounts: use 'getBalanceByUserId ({})'", id);
         if (id == null) {

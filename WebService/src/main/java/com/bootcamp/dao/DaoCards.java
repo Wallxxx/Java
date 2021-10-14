@@ -32,8 +32,15 @@ public class DaoCards implements DaoCardsInterface{
     @Transactional
     @Override
     public void newCard(String number) {
-        Accounts accountId = entityManager.createQuery("from Accounts where number = '" + number + "'", Accounts.class).getSingleResult();
+        Accounts accountId = entityManager.createQuery("from Accounts where number = '" + number + "'", Accounts.class)
+                .getSingleResult();
         Cards card = new Cards(accountId, generator.generate());
         entityManager.persist(card);
+    }
+
+    @Override
+    public Long getCountCardsByAccount(String number) {
+        return entityManager.createQuery("select count (*) from Cards where account = " +
+                "(select id from Accounts where number = '" + number + "')", Long.class).getSingleResult();
     }
 }

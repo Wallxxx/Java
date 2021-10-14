@@ -27,4 +27,9 @@ public class ControllerCards {
     public ResponseEntity<Cards> newCard (@PathVariable("number") String number) {
         return bankServiceCards.newCard(number);
     }
+
+    @RequestMapping(value = "count/{number}", method = RequestMethod.GET)
+    public ResponseEntity<Long> getCountCardsByAccount(@PathVariable("number") String number) {
+        return bankServiceCards.getCountCardsByAccount(number);
+    }
 }
