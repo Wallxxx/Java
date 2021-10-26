@@ -8,15 +8,25 @@ import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Чтение пользователей из файла
+ */
 public class ReadFromFilePersons extends AbstractItems implements Exec {
 
     private final int firstName = 0;
     private final int lastName = 1;
 
+    /**
+     * Заполнение имени класса для отображения в списке меню.
+     */
     public ReadFromFilePersons() {
         this.name = "Чтение пользователей из файла";
     }
 
+    /**
+     * Чтение из файла и заполнение списка пользователями.
+     * @param data список для заполнения.
+     */
     @Override
     public void exec(List<Person> data) {
         System.out.print("Введте название файла (без расширения): ");
@@ -25,6 +35,11 @@ public class ReadFromFilePersons extends AbstractItems implements Exec {
         readFromFile(data, fileName);
     }
 
+    /**
+     * Работа с потоками. Открытие файла (создание, если отсутствует), чтение.
+     * @param data список для заполнения.
+     * @param fileName имя файла, из которого производить чтение.
+     */
     private void readFromFile(List<Person> data, String fileName) {
         File file = new File(fileName + ".txt");
         try {

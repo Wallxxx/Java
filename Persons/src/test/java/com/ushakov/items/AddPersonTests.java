@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddPersonTesting {
+public class AddPersonTests {
 
     private final InputStream originalIn = System.in;
 
@@ -24,10 +24,18 @@ public class AddPersonTesting {
     }
 
     @Test
-    public void AddPersonTest() {
+    public void addPersonTest() {
         AddPerson temp = new AddPerson();
         temp.exec(data);
 
+        Assert.assertEquals(1, data.size());
+    }
+
+    @Test
+    public void pushDataTest() {
+        data.clear();
+        AddPerson temp = new AddPerson();
+        temp.pushData(data, "Maxim", "Wallxxx");
         Assert.assertEquals(1, data.size());
     }
 

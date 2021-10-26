@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CleanPersonsTesting {
+public class CleanPersonsTests {
 
     private final List<Person> data = new ArrayList<>();
 

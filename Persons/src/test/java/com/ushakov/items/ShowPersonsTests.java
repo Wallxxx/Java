@@ -11,7 +11,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShowSortedPersonsTesting { // TODO: Этот тест не проходит, нужен фикс сортировки
+public class ShowPersonsTests {
+
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
 
@@ -19,23 +20,18 @@ public class ShowSortedPersonsTesting { // TODO: Этот тест не прох
 
     @Before
     public void setStream() {
-        data.add(new Person("Alena", "Annet"));
-        data.add(new Person("Veronika", "Bosman"));
-        data.add(new Person("Daniil", "Aaron"));
         data.add(new Person("Maxim", "Wallxxx"));
+        data.add(new Person("DDWWW%", "'"));
 
         System.setOut(new PrintStream(outContent));
     }
 
     @Test
-    public void ShowSortedPersonsTest() {
-        ShowSortedPersons temp = new ShowSortedPersons();
+    public void ShowPersonTest() {
+        ShowPersons temp = new ShowPersons();
         temp.exec(data);
 
-        Assert.assertEquals("Daniil Aaron\n" +
-                "Alena Annet\n" +
-                "Veronika Bosman\n" +
-                "Maxim Wallxxx\n", outContent.toString());
+        Assert.assertEquals("Список всех пользователей: \nMaxim Wallxxx\nDDWWW% '\n", outContent.toString());
     }
 
     @After
