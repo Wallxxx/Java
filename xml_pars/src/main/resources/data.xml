@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<office>
+
+    <employee>
+        <id>1</id>
+        <name>Иван</name>
+        <surname>Иванов</surname>
+        <position>Менеджер</position>
+        <salary>80000</salary>
+    </employee>
+
+    <employee>
+        <id>2</id>
+        <name>Максим</name>
+        <surname>Wallxxx</surname>
+        <position>Основатель</position>
+        <salary>965000</salary>
+    </employee>
+
+    <employee>
+        <id>3</id>
+        <name>Денис</name>
+        <surname>Фостер</surname>
+        <position>Менеджер</position>
+        <salary>75000</salary>
+    </employee>
+
+    <employee>
+        <id>4</id>
+        <name>Иван</name>
+        <surname>Иванов</surname>
+        <position>Разработчик</position>
+        <salary>135000</salary>
+    </employee>
+
+    <employee>
+        <id>5</id>
+        <name>Иван</name>
+        <surname>Иванов</surname>
+        <position>Тестировщик</position>
+        <salary>140000</salary>
+    </employee>
+
+</office>
