@@ -25,15 +25,19 @@ public class Menu {
             }
             switch (choice) {
                 case "1":
+                    System.out.print("Введите id пользователя: ");
                     FindById.findById(Integer.parseInt(scanner.nextLine()));
                     break;
                 case "2":
+                    System.out.print("Введите фамилию пользователя: ");
                     FindBySurname.findBySurname(scanner.nextLine());
                     break;
                 case "3":
+                    System.out.print("Введите id пользователя и его новую зарплату (через пробел): ");
                     EditSalary.editSalary(scanner.nextInt(), scanner.nextInt());
                     break;
                 case "4":
+                    System.out.print("Введите данные нового пользователя (без id, через пробел): ");
                     String[] info = scanner.nextLine().split(" ");
                     if (info.length != 4) System.out.println("Указано неверное количество параметров. ");
                     else {
@@ -58,5 +62,6 @@ public class Menu {
         System.out.println("4) Добавление нового сотрудника");
         System.out.println("5) Вывод всех сотрудников");
         System.out.println("6) Выход");
+        System.out.print("Выберите пункт меню (цифру): ");
     }
 }

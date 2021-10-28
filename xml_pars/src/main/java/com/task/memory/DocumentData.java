@@ -50,21 +50,5 @@ public class DocumentData {
         } catch (ParserConfigurationException | XPathExpressionException | IOException | SAXException e) {
             e.printStackTrace();
         }
-
-
-
-        /*
-        NodeList employees = document.getDocumentElement().getElementsByTagName("employee");
-        System.out.println("Debug: " + employees.getLength());
-        for (int i = 0; i < employees.getLength(); ++i) {
-            Node employee = employees.item(i);
-            NamedNodeMap attributes = employee.getAttributes();
-            data.add(new Employee(Integer.parseInt(attributes.getNamedItem("id").getNodeValue()),
-                    attributes.getNamedItem("name").getNodeValue(),
-                    attributes.getNamedItem("surname").getNodeValue(),
-                    attributes.getNamedItem("position").getNodeValue(),
-                    Integer.parseInt(attributes.getNamedItem("salary").getNodeValue())));
-        }
-         */
     }
 }
