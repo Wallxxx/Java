@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "api/messages/")
+@RequestMapping(value = "api/message/")
 public class ControllerMessages {
 
     private final ServiceMessages serviceMessages;
@@ -20,6 +20,14 @@ public class ControllerMessages {
     @Autowired
     public ControllerMessages(ServiceMessages serviceMessages) {
         this.serviceMessages = serviceMessages;
+    }
+
+    @RequestMapping(value = "send/{login}&{password}&{recipient}&{message}", method = RequestMethod.PUT)
+    public ResponseEntity<Messages> send(@PathVariable("login") String login,
+                                         @PathVariable("password") String password,
+                                         @PathVariable("recipient") String recipient,
+                                         @PathVariable("message") String message) {
+        return serviceMessages.send(login, password, recipient, message);
     }
 
     @RequestMapping(value = "update/{login}&{password}", method = RequestMethod.GET)

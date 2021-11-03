@@ -34,7 +34,7 @@ public class ControllerAccounts {
         return serviceAccounts.auth(login, password);
     }
 
-    @RequestMapping(value = "all/", method = RequestMethod.GET)
+    @RequestMapping(value = "all", method = RequestMethod.GET)
     public ResponseEntity<List<String>> getAllClients() {
         return serviceAccounts.getAllClients();
     }

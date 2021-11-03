@@ -12,9 +12,14 @@ import java.util.Objects;
 public class DaoAccounts implements DaoAccountsInterface {
 
     @Override
-    public void registerNewClient(String login, String password) {
-        Accounts newAccount = new Accounts(login, password);
-        Data.getAccounts().add(newAccount);
+    public boolean registerNewClient(String login, String password) {
+        if (this.auth(login, password) == null) {
+            Accounts newAccount = new Accounts(login, password);
+            Data.getAccounts().add(newAccount);
+            Data.getData().put(newAccount, new ArrayList<>());
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -22,6 +27,16 @@ public class DaoAccounts implements DaoAccountsInterface {
         for (Accounts accounts : Data.getAccounts()) {
             if (Objects.equals(accounts.getLogin(), login) &&
                     Objects.equals(accounts.getPassword(), password)) {
+                return accounts;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Accounts search(String login) {
+        for (Accounts accounts : Data.getAccounts()) {
+            if (Objects.equals(accounts.getLogin(), login)) {
                 return accounts;
             }
         }

@@ -25,6 +25,17 @@ public class ServiceMessages implements ServiceMessagesInterface {
     }
 
     @Override
+    public ResponseEntity<Messages> send(String login, String password, String recipient, String message) {
+        if (login.length() < 1 || password.length() < 1 || recipient.length() < 1) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        if(daoMessages.send(daoAccounts, login, password, recipient, message)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Override
     public ResponseEntity<List<Messages>> getUpdatesForMe(String login, String password) {
         log.debug("ServiceAccounts: use getUpdatesForMe({}, [password])", login);
         if (login.length() < 1 || password.length() < 1) {

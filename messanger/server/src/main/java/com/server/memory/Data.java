@@ -9,13 +9,13 @@ import java.util.List;
 
 public class Data {
     private static final List<Accounts> accounts = new ArrayList<>();
-    private static final HashMap<Accounts, Messages> data = new HashMap<>();
+    private static final HashMap<Accounts, List<Messages>> data = new HashMap<>();
 
     public static List<Accounts> getAccounts() {
         return accounts;
     }
 
-    public static HashMap<Accounts, Messages> getData() {
+    public static HashMap<Accounts, List<Messages>> getData() {
         return data;
     }
 }

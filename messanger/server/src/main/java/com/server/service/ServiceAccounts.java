@@ -27,8 +27,10 @@ public class ServiceAccounts implements ServiceAccountsInterface {
         if (login.length() < 1 || password.length() < 1) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        daoAccounts.registerNewClient(login, password);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (daoAccounts.registerNewClient(login, password)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.FOUND);
     }
 
     @Override
