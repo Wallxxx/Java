@@ -22,8 +22,8 @@ public class ControllerMessages {
         this.serviceMessages = serviceMessages;
     }
 
-    @RequestMapping(value = "send/{login}&{password}&{recipient}&{message}", method = RequestMethod.PUT)
-    public ResponseEntity<Messages> send(@PathVariable("login") String login,
+    @RequestMapping(value = "send/{login}&{password}&{recipient}&'{message}'", method = RequestMethod.PUT)
+    public ResponseEntity<Messages> send(@PathVariable("login") String login, // TODO: есть смысл попробовать использовать хэш вместо открытого сообщения
                                          @PathVariable("password") String password,
                                          @PathVariable("recipient") String recipient,
                                          @PathVariable("message") String message) {

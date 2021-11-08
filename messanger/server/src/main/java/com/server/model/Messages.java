@@ -12,4 +12,5 @@ import lombok.Setter;
 public class Messages {
     private String sender;
     private String message;
+    private boolean isRead;
 }

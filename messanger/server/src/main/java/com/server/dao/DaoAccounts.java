@@ -1,5 +1,6 @@
 package com.server.dao;
 
+import com.server.memory.Boot;
 import com.server.memory.Data;
 import com.server.model.Accounts;
 import org.springframework.stereotype.Repository;
@@ -11,12 +12,15 @@ import java.util.Objects;
 @Repository
 public class DaoAccounts implements DaoAccountsInterface {
 
+    private final Boot boot = new Boot();
+
     @Override
     public boolean registerNewClient(String login, String password) {
         if (this.auth(login, password) == null) {
             Accounts newAccount = new Accounts(login, password);
             Data.getAccounts().add(newAccount);
             Data.getData().put(newAccount, new ArrayList<>());
+            boot.saveAccounts(login, password);
             return true;
         }
         return false;

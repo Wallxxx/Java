@@ -13,23 +13,13 @@ import java.util.Map;
 public class DaoMessages implements DaoMessagesInterface {
 
     @Override
-    public void startDialog(String login, String password) {
-
-    }
-
-    @Override
-    public void stopDialog(String login, String password) {
-
-    }
-
-    @Override
     public boolean send(DaoAccounts daoAccounts, String login, String password, String recipient, String message) {
         if (daoAccounts.auth(login, password) == null) {
             return false;
         }
         Accounts account = daoAccounts.search(recipient);
         if (account == null) return false;
-        Messages messages = new Messages(login, message);
+        Messages messages = new Messages(login, message, false);
         for (Map.Entry<Accounts, List<Messages>> entry : Data.getData().entrySet()) {
             if (entry.getKey() == account) {
                 entry.getValue().add(messages);
@@ -45,7 +35,12 @@ public class DaoMessages implements DaoMessagesInterface {
         List<Messages> answer = new ArrayList<>();
         for (Map.Entry<Accounts, List<Messages>> entry : Data.getData().entrySet()) {
             if (entry.getKey() == account) {
-                answer = entry.getValue();
+                for (Messages message : entry.getValue()) {
+                    if (!message.isRead()) {
+                        answer.add(message);
+                        message.setRead(true);
+                    }
+                }
             }
         }
         return answer;
